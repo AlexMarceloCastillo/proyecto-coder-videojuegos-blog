@@ -85,3 +85,12 @@ html, body {
   transform: scale(1.2);
   transition: transform 330ms ease-in-out;
 }
+
+/* Error */
+.error, .errorlist {
+  color: red;
+}
+
+.nav-link:hover {
+  color: yellow;
+}

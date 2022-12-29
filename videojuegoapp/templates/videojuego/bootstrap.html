@@ -8,8 +8,6 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
   <title>Videojuego Blog</title>
-  <!-- Favicon-->
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <!-- Bootstrap icons-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"
     type="text/css" />
@@ -26,7 +24,7 @@
   <nav class="navbar navbar-expand-lg sticky-top">
     <div class="link-container col-lg-6 d-flex">
       <h5 class="mx-auto my-auto ms-4">
-        <a href="{% url 'Inicio' %}">Inicio</a>
+        <a href="{% url 'gameblog-home' %}">Inicio</a>
       </h5>
       <div class="collapse navbar-collapse ms-4" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -57,13 +55,29 @@
     <div class="actions-container col-lg-6 d-flex justify-content-between">
       <div class="search-container">
         <form class="search-form d-flex me-4">
-          <input class="search-field form-control" type="search" placeholder="Buscar videojuego o post" aria-label="Buscar" />
+          <input class="search-field form-control" type="search" placeholder="Buscar videojuego o post"
+            aria-label="Buscar" />
           <button class="btn btn-search" type="submit">
             <i class="bi-search fs-3 info-icon"></i>
           </button>
         </form>
       </div>
-      <button class="btn btn-primary me-4">Signup</button>
+      <ul class="navbar-nav ms-auto py-4 py-lg-0">
+        {% if request.user.is_authenticated %}
+        {% if request.user.is_superuser %}
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'gameblog-profile' %}">Acciones</a>
+        </li>
+        {% endif %}
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'gameblog-profile' %}">Mi perfil</a>
+        </li>
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'gameblog-logout' %}">Logout</a></a>
+        </li>
+        {% else %}
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'gameblog-login' %}">Login</a></li>
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'gameblog-register' %}">Signup</a>
+          {% endif %}
+        </li>
+      </ul>
     </div>
   </nav>
   <!-- Icons Grid-->
@@ -82,7 +96,7 @@
           <i class="bi-instagram fs-3 info-icon insta"></i>
         </a>
       </div>
-      <small>© 2022 Videojuego Blog, todos los derechos reservados</small>
+      <small>© 2023 Videojuego Blog, todos los derechos reservados</small>
     </div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>

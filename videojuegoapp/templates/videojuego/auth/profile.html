@@ -1,0 +1,25 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="profile">
+  <h1>Mi perfil</h1>
+  {% for user in users %}
+  <div class="card my-4">
+          <div class="card-body">
+              <img src="{{ users_extras.image.url}}" style="max-width: 55px;">
+              <h6 class="card-title mb-2 text-muted"> {{ user.last_name }}, {{ user.first_name }} </h6>
+              <h6 class="card-title mb-2 text-mute">E-Mail : {{ user.email }}</h6>
+              <h6><a class="card-title mb-2 text-mute" target="_blank" href= '{{ users_extras.bio_link }}' >{{ users_extras.bio_link }} </a></h6>
+      <!-- <a class="btn btn-primary" href="{% url 'smbapp-profile-edit' %}">Edit Profile</a> 
+      {% if users_extras.bio_link  == null %}
+          <a class="btn btn-primary" href="{% url 'smbapp-profile-add-musician' %}">Add Extra Data</a>
+      {% else %}
+          <a class="btn btn-primary" href="{% url 'smbapp-profile-edit-musician' %}">Edit Extra Data</a>
+      {% endif %} -->
+  </div>
+{% endfor %}
+</div>
+
+{% endblock %}
