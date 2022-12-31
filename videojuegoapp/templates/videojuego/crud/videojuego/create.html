@@ -1,0 +1,19 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="create-videojuego col-8 mx-auto">
+  <h1>Crear Videojuego</h1>
+  <form class="crud-form" action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input a class="btn btn-primary" type="submit" value="Enviar">
+    <a href="{% url 'gameblog-list-videojuego' 1%}" class="btn btn-secondary">Ver lista</a>
+  </form>
+  {% if errors %}
+  <p class="error">Error: {{errors}}</p>
+  {% endif %}
+</div>
+
+{% endblock %}

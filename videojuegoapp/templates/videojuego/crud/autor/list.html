@@ -1,0 +1,62 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="list-autor mt-2">
+  <div class="list-header row">
+    <h1 class="col-9">Lista de Autores</h1>
+    <div class="col-3 d-flex justify-content-between">
+      <a href="{% url 'gameblog-actions' %}" class="btn btn-secondary">Volver</a>
+      <a href="{% url 'gameblog-create-autor' %}" class="btn btn-primary">Crear Autor</a>
+    </div>
+  </div>
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Fecha Nacimiento</th>
+        <th scope="col">Foto</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for autor in page_autor %}
+      <tr>
+        <td>{{ autor.id }}</td>
+        <td>{{ autor.nombre }}</td>
+        <td>{{ autor.apellido}}</td>
+        <td>{{ autor.fecha_nacimiento}}</td>
+        <td><img src="{{ autor.foto_url}}" alt="" style="height: 40px;"></td>
+        <td class="row d-flex justify-content-between">
+          <a href="{% url 'gameblog-update-autor' autor.id %}" class="btn btn-warning no-padding col-3"><i
+              class="bi bi-pencil"></i></a>
+          <a href="{% url 'gameblog-delete-autor' autor.id %}" class="btn btn-danger no-padding col-3">
+            <i class="bi bi-trash"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% block pagination %}
+  <center>
+    {% if page_autor.has_previous %}
+    <a class="btn btn-primary" href="{% url 'gameblog-list-autor' page_autor.previous_page_number %}">
+      Previous Page
+    </a>
+    {% endif%}
+    {% if page_autor.has_next %}
+    <a class="btn btn-primary" href="{% url 'gameblog-list-autor' page_autor.next_page_number %}">
+      Next Page
+    </a>
+    {% endif%}
+  </center>
+  {% endblock %}
+</div>
+
+{% endblock %}

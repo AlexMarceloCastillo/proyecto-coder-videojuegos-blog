@@ -1,0 +1,19 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="update-desarrollador col-6 mx-auto">
+  <h1>Editar Desarrollador</h1>
+  <form action="" method="post" class="mt-5 crud-form">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input a class="btn btn-primary" type="submit" value="Enviar">
+    <a href="{% url 'gameblog-list-desarrollador' 1%}" class="btn btn-secondary">Ver lista</a>
+  </form>
+  {% if errors %}
+  <p class="error">Error: {{errors}}</p>
+  {% endif %}
+</div>
+
+{% endblock %}
