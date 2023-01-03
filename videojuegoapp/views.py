@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required, user_passes_test
 from datetime import datetime
+from django.db.models import Q
 
 from videojuegoapp.models import *
 from videojuegoapp.forms import *
@@ -18,7 +19,9 @@ def check_admin(user):
 
 
 def inicio(request):
-    return render(request, "videojuego/index/index.html")
+    first_post = Post.objects.all().order_by("fecha_creacion")[:1]
+    carrousel_posts = Post.objects.all().order_by("fecha_creacion")[2:6]
+    return render(request, "videojuego/index/index.html", { "carrousel_posts": carrousel_posts, "first_post": first_post })
 
 # Auth Views
 def register(request):
@@ -94,6 +97,17 @@ def profile_password(request):
     return render(request, 'videojuego/auth/edit-password.html', {"form": form})
 # End Auth Views
 
+# Search Views
+def search_posts(request):
+    if request.GET.get('query'):
+        query = request.GET['query']
+        posts = Post.objects.filter(Q(titulo__icontains=query) | Q(contenido__icontains=query))
+        return render(request, "videojuego/posts/busqueda.html", {"posts": posts, "query": query})
+    return render(request, "videojuego/posts/busqueda.html")
+
+def detalle_post(request, id):
+    post = Post.objects.get(id=id)
+    return render(request, "videojuego/posts/detalle.html", {"post": post })
 # ----------------------------------------------
 
 # Admin Views
@@ -362,7 +376,6 @@ def create_post(request):
             categoria = Categoria.objects.get(id=data["categoria"])
             post = Post(
                 titulo=data["titulo"],
-                subtitulo=data["subtitulo"],
                 contenido=data["contenido"],
                 fecha_creacion=datetime.now(),
                 autor=autor,
@@ -384,7 +397,6 @@ def update_post(request, id):
         if form.is_valid():
             data = form.cleaned_data
             post.titulo = data["titulo"]
-            post.subtitulo = data["subtitulo"]
             post.contenido = data["contenido"]
             post.imagen_url = data["imagen_url"]
             autor = Autor.objects.get(id=data["autor"])
@@ -396,7 +408,6 @@ def update_post(request, id):
     else:
         data_mapped = {}
         data_mapped["titulo"] = post.titulo
-        data_mapped["subtitulo"] = post.subtitulo
         data_mapped["contenido"] = post.contenido
         data_mapped["imagen_url"] = post.imagen_url
         data_mapped["autor"] = post.autor.id

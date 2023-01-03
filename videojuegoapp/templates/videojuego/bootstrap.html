@@ -26,36 +26,11 @@
       <h5 class="mx-auto my-auto ms-4">
         <a href="{% url 'gameblog-home' %}">Inicio</a>
       </h5>
-      <div class="collapse navbar-collapse ms-4" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item dropdown">
-            <a class="dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-              aria-expanded="false">
-              Categorias
-            </a>
-            <ul class="dropdown-menu dr" aria-labelledby="navbarDropdown">
-              <li class="dropdown-item">
-                <Link class="nav-link">Post</Link>
-              </li>
-              <li class="dropdown-item">
-                <Link class="nav-link">Videojuego</Link>
-              </li>
-              <li class="dropdown-item">
-                <Link class="nav-link">Genero</Link>
-              </li>
-              <li class="dropdown-item">
-                <Link class="nav-link">Plataformas</Link>
-              </li>
-            </ul>
-          </li>
-        </ul>
-
-      </div>
     </div>
     <div class="actions-container col-lg-6 d-flex justify-content-between">
       <div class="search-container">
-        <form class="search-form d-flex me-4">
-          <input class="search-field form-control" type="search" placeholder="Buscar videojuego o post"
+        <form class="search-form d-flex me-4" action="/post/search">
+          <input class="search-field form-control" name="query" type="text" placeholder="Buscar videojuego o post"
             aria-label="Buscar" />
           <button class="btn btn-search" type="submit">
             <i class="bi-search fs-3 info-icon"></i>

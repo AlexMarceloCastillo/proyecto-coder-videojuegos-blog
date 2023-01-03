@@ -11,6 +11,8 @@ urlpatterns = [
     path('auth/profile', profile, name='gameblog-profile'),
     path('auth/change-password', profile_password, name='gameblog-change-password'),
     path('auth/logout', LogoutView.as_view(next_page="/home"), name='gameblog-logout'),
+    path('post/search', search_posts, name='gameblog-search-post'),
+    path('post/<int:id>', detalle_post, name='gameblog-detail-post'),
     # Admin
     path('actions', actions, name='gameblog-actions'),
     # CRUD Genero

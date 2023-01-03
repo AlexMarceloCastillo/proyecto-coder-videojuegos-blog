@@ -60,8 +60,7 @@ class FormAutor (forms.Form):
     password2 = forms.CharField(label='Repetir Contraseña', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
 class FormPost (forms.Form):
-    titulo = forms.CharField(max_length=40)
-    subtitulo = forms.CharField(max_length=40)
+    titulo = forms.CharField(max_length=255)
     contenido = forms.CharField(widget=forms.Textarea)
     imagen_url = forms.CharField(max_length=255)
     autor = forms.ChoiceField(choices=[])
@@ -69,7 +68,7 @@ class FormPost (forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(FormPost, self).__init__(*args, **kwargs)
-        self.fields['autor'].choices = [(x.pk, x.nombre) for x in Autor.objects.all().order_by("nombre")]
+        self.fields['autor'].choices = [(x.pk, x.user.username) for x in Autor.objects.all()]
         self.fields['categoria'].choices = [(x.pk, x.nombre) for x in Categoria.objects.all().order_by("nombre")]
 
 class FormVideojuego (forms.Form):
