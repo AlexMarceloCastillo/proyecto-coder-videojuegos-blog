@@ -1,0 +1,16 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="update-autor col-8 mx-auto">
+  <h1>Editar Autor</h1>
+  <form action="" method="post" class="crud-form mt-5">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input a class="btn btn-primary" type="submit" value="Enviar">
+    <a href="{% url 'gameblog-list-autor' 1%}" class="btn btn-secondary">Ver lista</a>
+  </form>
+</div>
+
+{% endblock %}

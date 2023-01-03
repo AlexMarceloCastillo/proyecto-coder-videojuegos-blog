@@ -1,0 +1,63 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="inicio mt-5 mb-5">
+  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      {%for post in first_post %}
+      <div class="carousel-item active">
+        <img src="{{ post.imagen_url}}" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>{{ post.titulo }}</h5>
+        </div>
+      </div>
+      {%endfor%}
+
+      {%for post in carrousel_posts %}
+      <div class="carousel-item">
+        <img src="{{ post.imagen_url}}" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>{{ post.titulo }}</h5>
+        </div>
+      </div>
+      {%endfor%}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <div class="card mx-auto my-auto col-10 mt-5">
+    <div class="card-body">
+      <h5 class="card-title">Contacto</h5>
+      <p class="card-text">
+        Sobre nosotros:
+        Quiénes somos
+        Correos:
+        Notas de prensa: press@3djuegos.com
+        Publicidad y Servicios a empresas: publicidad@webedia-group.com
+        Otros: redaccion@3djuegos.com
+        Trabaja con nosotros:
+        Si eres un periodista apasionado del entretenimiento y quieres formar parte de nuestro equipo de redacción,
+        envíanos tu CV a: recruiting-spain@webedia-group.com
+        Teléfono:
+        (+34) 91 714 01 67
+        Dirección:
+        WEBEDIA
+        Calle Zurbano 73, 1°
+        28010 Madrid
+        Mapa
+        Ver dónde está Webedia en un mapa más grande
+        “¿Tienes algo que contarnos? Queremos escucharte.”
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

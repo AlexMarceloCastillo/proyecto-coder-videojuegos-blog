@@ -1,0 +1,15 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="register mx-auto py-4 px-4">
+  <form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input a class="btn btn-primary" type="submit" value="Submit">
+  </form>
+</div>
+
+{% endblock %}

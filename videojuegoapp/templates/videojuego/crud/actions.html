@@ -1,0 +1,116 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="actions mt-4">
+  <h1>Panel Administrador</h1>
+  <div class="actions-list">
+    <div class="row mb-4">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">CRUD Genero</h5>
+            <p class="card-text">
+              El genero es la forma principal de diferenciar los videojuegos.</p>
+            <p class="card-text">
+              Un genero esta relacionado con muchos videojuegos (relacion one to many)
+            </p>
+            <a href="{% url 'gameblog-create-genero' %}" class="btn btn-primary">Crear</a>
+            <a href="{% url 'gameblog-list-genero' 1%}" class="btn btn-success">Listar</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">CRUD Plataforma</h5>
+            <p class="card-text">Una plataforma es un sistema que sirve
+              como base para hacer funcionar determinados módulos de hardware o de software con los que es compatible.
+            </p>
+            <p class="card-text">
+              Muchas plataformas se relacionan con muchos videojuegos (relacion many to many)
+            </p>
+            <a href="{% url 'gameblog-create-plataforma' %}" class="btn btn-primary">Crear</a>
+            <a href="{% url 'gameblog-list-plataforma' 1%}" class="btn btn-success">Listar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">CRUD Desarrollador</h5>
+            <p class="card-text">
+              Un desarrollador de videojuegos es un desarrollador de software (ya sea un individuo o una empresa) 
+              que crea videojuegos para diversas plataformas (videoconsola o computadora personal). .</p>
+            <p class="card-text">
+              Esta relacionado con muchos videojuegos (relacion one to many)
+            </p>
+            <a href="{% url 'gameblog-create-desarrollador' %}" class="btn btn-primary">Crear</a>
+            <a href="{% url 'gameblog-list-desarrollador' 1%}" class="btn btn-success">Listar</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">CRUD Autor</h5>
+            <p class="card-text">Un autor es aquel que crea los post (noticias) de la aplicacion.
+            </p>
+            <p class="card-text">
+              Esta relacionado con muchos post (relacion one to many)
+            </p>
+            <a href="{% url 'gameblog-create-autor' %}" class="btn btn-primary">Crear</a>
+            <a href="{% url 'gameblog-list-autor' 1%}" class="btn btn-success">Listar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">CRUD Post</h5>
+            <p class="card-text">
+              Es un comentario, artículo, crítica o noticia que publica un autor en un blog, 
+              aunque recientemente, la palabra “post” también se ha empezado a utilizar para denominar las publicaciones en redes sociales..</p>
+            <a href="{% url 'gameblog-create-post' %}" class="btn btn-primary">Crear</a>
+            <a href="{% url 'gameblog-list-post' 1%}" class="btn btn-success">Listar</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">CRUD Categoria</h5>
+            <p class="card-text">La categoria es la forma principal de diferenciar los post.
+            </p>
+            <p class="card-text">
+              Una categoria se relacionan con muchos posts (relacion many to many)
+            </p>
+            <a href="{% url 'gameblog-create-categoria' %}" class="btn btn-primary">Crear</a>
+            <a href="{% url 'gameblog-list-categoria' 1%}" class="btn btn-success">Listar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">CRUD Videojuego</h5>
+            <p class="card-text">
+              Un videojuego, juego de video o juego de vídeo es un juego electrónico en el que una o más personas interactúan por medio de un controlador, con un dispositivo que muestra imágenes de video.</p>
+            <a href="{% url 'gameblog-create-videojuego' %}" class="btn btn-primary">Crear</a>
+            <a href="{% url 'gameblog-list-videojuego' 1%}" class="btn btn-success">Listar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

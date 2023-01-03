@@ -1,0 +1,16 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="create-categoria col-8 mx-auto">
+  <h1>Crear Categoria</h1>
+  <form class="crud-form mt-5" action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input a class="btn btn-primary" type="submit" value="Enviar">
+    <a href="{% url 'gameblog-list-categoria' 1%}" class="btn btn-secondary">Ver lista</a>
+  </form>
+</div>
+
+{% endblock %}

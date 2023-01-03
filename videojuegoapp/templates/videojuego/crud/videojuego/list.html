@@ -1,0 +1,62 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="list-videojuego mt-2">
+  <div class="list-header row">
+    <h1 class="col-9">Lista de Videojuegos</h1>
+    <div class="col-3 d-flex justify-content-between">
+      <a href="{% url 'gameblog-actions' %}" class="btn btn-secondary">Volver</a>
+      <a href="{% url 'gameblog-create-videojuego' %}" class="btn btn-primary">Crear Videojuegos</a>
+    </div>
+  </div>
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Genero</th>
+        <th scope="col">Desarrollador</th>
+        <th scope="col">Fecha Lanzamiento</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for videojuego in page_videojuego %}
+      <tr>
+        <td>{{ videojuego.id }}</td>
+        <td>{{ videojuego.nombre }}</td>
+        <td>{{ videojuego.genero.nombre }}</td>
+        <td>{{ videojuego.desarrollador.nombre }}</td>
+        <td>{{ videojuego.fecha_lanzamiento}}</td>
+        <td class="row d-flex justify-content-between">
+          <a href="{% url 'gameblog-update-videojuego' videojuego.id %}" class="btn btn-warning no-padding col-3"><i
+              class="bi bi-pencil"></i></a>
+          <a href="{% url 'gameblog-delete-videojuego' videojuego.id %}" class="btn btn-danger no-padding col-3">
+            <i class="bi bi-trash"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% block pagination %}
+  <center>
+    {% if page_videojuego.has_previous %}
+    <a class="btn btn-primary" href="{% url 'gameblog-list-videojuego' page_videojuego.previous_page_number %}">
+      Previous Page
+    </a>
+    {% endif%}
+    {% if page_videojuego.has_next %}
+    <a class="btn btn-primary" href="{% url 'gameblog-list-videojuego' page_videojuego.next_page_number %}">
+      Next Page
+    </a>
+    {% endif%}
+  </center>
+  {% endblock %}
+</div>
+
+{% endblock %}

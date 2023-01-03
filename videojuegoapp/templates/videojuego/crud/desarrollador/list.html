@@ -1,0 +1,60 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="list-desarrollador mt-2">
+  <div class="list-header row">
+    <h1 class="col-9">Lista de Desarrolladores</h1>
+    <div class="col-3 d-flex justify-content-between">
+      <a href="{% url 'gameblog-actions' %}" class="btn btn-secondary">Volver</a>
+      <a href="{% url 'gameblog-create-desarrollador' %}" class="btn btn-primary">Crear Desarrollador</a>
+    </div>
+  </div>
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Fundacion</th>
+        <th scope="col">Web</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for desarrollador in page_desarrollador %}
+      <tr>
+        <td>{{ desarrollador.id }}</td>
+        <td>{{ desarrollador.nombre }}</td>
+        <td>{{ desarrollador.fundacion}}</td>
+        <td><a href="{{ desarrollador.web_url }}" target="_blank">Link</a></td>
+        <td class="row d-flex justify-content-between">
+          <a href="{% url 'gameblog-update-desarrollador' desarrollador.id %}" class="btn btn-warning no-padding col-3"><i
+              class="bi bi-pencil"></i></a>
+          <a href="{% url 'gameblog-delete-desarrollador' desarrollador.id %}" class="btn btn-danger no-padding col-3">
+            <i class="bi bi-trash"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% block pagination %}
+  <center>
+    {% if page_desarrollador.has_previous %}
+    <a class="btn btn-primary" href="{% url 'gameblog-list-desarrollador' page_desarrollador.previous_page_number %}">
+      Previous Page
+    </a>
+    {% endif%}
+    {% if page_desarrollador.has_next %}
+    <a class="btn btn-primary" href="{% url 'gameblog-list-desarrollador' page_desarrollador.next_page_number %}">
+      Next Page
+    </a>
+    {% endif%}
+  </center>
+  {% endblock %}
+</div>
+
+{% endblock %}

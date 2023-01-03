@@ -1,0 +1,58 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="list-genero mt-2">
+  <div class="list-header row">
+    <h1 class="col-9">Lista de Generos</h1>
+    <div class="col-3 d-flex justify-content-between">
+      <a href="{% url 'gameblog-actions' %}" class="btn btn-secondary">Volver</a>
+      <a href="{% url 'gameblog-create-genero' %}" class="btn btn-primary">Crear Genero</a>
+    </div>
+  </div>
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Fecha Creacion</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for genero in page_genero %}
+      <tr>
+        <td>{{ genero.id }}</td>
+        <td>{{ genero.nombre }}</td>
+        <td>{{ genero.fecha_creacion}}</td>
+        <td class="row d-flex justify-content-between">
+          <a href="{% url 'gameblog-update-genero' genero.id %}" class="btn btn-warning no-padding col-3">
+            <i class="bi bi-pencil"></i></a>
+          <a href="{% url 'gameblog-delete-genero' genero.id %}" class="btn btn-danger no-padding col-3">
+            <i class="bi bi-trash"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {% block pagination %}
+  <center>
+    {% if page_genero.has_previous %}
+    <a class="btn btn-primary" href="{% url 'gameblog-list-genero' page_genero.previous_page_number %}">
+      Previous Page
+    </a>
+    {% endif%}
+    {% if page_genero.has_next %}
+    <a class="btn btn-primary" href="{% url 'gameblog-list-genero' page_genero.next_page_number %}">
+      Next Page
+    </a>
+    {% endif%}
+  </center>
+  {% endblock %}
+</div>
+
+{% endblock %}
