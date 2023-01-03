@@ -11,9 +11,6 @@
     <input a class="btn btn-primary" type="submit" value="Enviar">
     <a href="{% url 'gameblog-list-post' 1%}" class="btn btn-secondary">Ver lista</a>
   </form>
-  {% if errors %}
-  <p class="error">Error: {{errors}}</p>
-  {% endif %}
 </div>
 
 {% endblock %}

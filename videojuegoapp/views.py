@@ -3,6 +3,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login as login_
 from django.shortcuts import redirect
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required, user_passes_test
 from datetime import datetime
 
@@ -20,8 +21,6 @@ def inicio(request):
     return render(request, "videojuego/index/index.html")
 
 # Auth Views
-
-
 def register(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
@@ -31,7 +30,7 @@ def register(request):
                                     password=form.cleaned_data['password1'],
                                     )
             login_(request, new_user)
-            return render(request, "videojuego/index/index.html")
+            return redirect('/home')
     else:
         form = UserForm()
 
@@ -61,10 +60,38 @@ def login(request):
     form = AuthenticationForm()
     return render(request, 'videojuego/auth/login.html', {"form": form, "errors": errors})
 
-
 @login_required
 def profile(request):
-    return render(request, "videojuego/auth/profile.html")
+    user = request.user
+    if request.method == "POST":
+        form = FormEditProfile(request.POST)
+        if form.is_valid():
+                data = form.cleaned_data
+                user.first_name = data['first_name']
+                user.last_name = data['last_name']
+                user.email = data['email']
+                user.username = data['username']
+                user.save()
+                return redirect('/auth/profile')
+    else:
+        form = FormEditProfile(initial ={'first_name':user.first_name, 'last_name':user.last_name, 'email':user.email, 'username':user.username})
+    return render(request, 'videojuego/auth/profile.html', {"form": form})
+
+@login_required
+def profile_password(request):
+    user = request.user
+    if request.method == "POST":
+        form = FormEditPassword(request.POST)
+        if form.is_valid():
+                data = form.cleaned_data
+                if data["password1"] != data["password2"]:
+                    return render(request, 'videojuego/auth/edit-password.html', {"form": form, "errors": 'Las contraseñas deben ser iguales'})
+                user.set_password(data["password1"])
+                user.save()
+                return redirect('/auth/profile')
+    else:
+        form = FormEditPassword()
+    return render(request, 'videojuego/auth/edit-password.html', {"form": form})
 # End Auth Views
 
 # ----------------------------------------------
@@ -78,8 +105,6 @@ def actions(request):
     return render(request, 'videojuego/crud/actions.html')
 
 # CRUD Genero
-
-
 @login_required
 @user_passes_test(check_admin)
 def list_genero(request, page):
@@ -264,11 +289,20 @@ def create_autor(request):
         form = FormAutor(request.POST)
         if form.is_valid():
             data = form.cleaned_data
+            user = User(
+                username=data["username"],
+                first_name=data["first_name"],
+                last_name=data["last_name"],
+                is_superuser=0,
+                is_staff=0,
+                email=data["email"],
+                password=make_password(data["password1"])
+            )
+            user.save()
             autor = Autor(
-                nombre=data["nombre"],
-                apellido=data["apellido"],
                 fecha_nacimiento=data["fecha_nacimiento"],
-                foto_url=data["foto_url"]
+                foto_url=data["foto_url"],
+                user=user
                 )
             autor.save()
             return redirect('/actions/list/autor/1')
@@ -302,6 +336,8 @@ def update_autor(request, id):
 @user_passes_test(check_admin)
 def delete_autor(request, id):
     autor = Autor.objects.get(id=id)
+    user = User.objects.get(id=autor.user.pk)
+    user.delete()
     autor.delete()
     return redirect('/actions/list/autor/1')
 # END CRUD Autor

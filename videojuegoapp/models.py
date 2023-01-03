@@ -1,18 +1,17 @@
 from django.db import models
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Autor(models.Model):
-    nombre = models.CharField(max_length=40)
-    apellido = models.CharField(max_length=40)
     fecha_nacimiento = models.DateField()
     foto_url = models.CharField(max_length=255)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 class Categoria(models.Model):
     nombre = models.CharField(max_length=40)
 
 class Post(models.Model):
-    titulo = models.CharField(max_length=40)
-    subtitulo = models.CharField(max_length=40)
+    titulo = models.CharField(max_length=255)
     contenido = models.TextField()
     fecha_creacion = models.DateField()
     imagen_url = models.CharField(max_length=255)

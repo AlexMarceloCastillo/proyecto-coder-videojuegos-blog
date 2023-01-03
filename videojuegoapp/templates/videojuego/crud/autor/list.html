@@ -18,6 +18,7 @@
         <th scope="col">ID</th>
         <th scope="col">Nombre</th>
         <th scope="col">Apellido</th>
+        <th scope="col">Email</th>
         <th scope="col">Fecha Nacimiento</th>
         <th scope="col">Foto</th>
         <th scope="col">Acciones</th>
@@ -27,10 +28,11 @@
       {% for autor in page_autor %}
       <tr>
         <td>{{ autor.id }}</td>
-        <td>{{ autor.nombre }}</td>
-        <td>{{ autor.apellido}}</td>
+        <td>{{ autor.user.first_name }}</td>
+        <td>{{ autor.user.last_name }}</td>
+        <td>{{ autor.user.email }}</td>
         <td>{{ autor.fecha_nacimiento}}</td>
-        <td><img src="{{ autor.foto_url}}" alt="" style="height: 40px;"></td>
+        <td><img src="{{ autor.foto_url}}" alt="" style="height: 40px; width: 40px;"></td>
         <td class="row d-flex justify-content-between">
           <a href="{% url 'gameblog-update-autor' autor.id %}" class="btn btn-warning no-padding col-3"><i
               class="bi bi-pencil"></i></a>

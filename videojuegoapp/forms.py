@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 
 from videojuegoapp.models import *
 COLOR_CHOICES = (
@@ -25,6 +24,10 @@ class UserForm (UserCreationForm):
     password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(
         attrs={'class': 'form-control'}))
 
+    class Meta:
+        model = User
+        fields = ['first_name','last_name','email','username', 'password1', 'password2']
+
 
 class CreateFormGenero (forms.Form):
     nombre = forms.CharField(max_length=40)
@@ -47,10 +50,14 @@ class FormDesarrollador (forms.Form):
 
 
 class FormAutor (forms.Form):
-    nombre = forms.CharField(max_length=40)
-    apellido = forms.CharField(max_length=40)
+    first_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}))
     fecha_nacimiento = forms.DateField()
-    foto_url = forms.CharField(max_length=255)
+    foto_url = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(max_length=50, widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(label='Repetir Contraseña', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
 class FormPost (forms.Form):
     titulo = forms.CharField(max_length=40)
@@ -80,3 +87,17 @@ class FormVideojuego (forms.Form):
 
 class FormCategoria (forms.Form):
     nombre = forms.CharField(max_length=40)
+
+class FormEditProfile (forms.Form):
+    first_name = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':'form-control'}))
+    last_name = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':'form-control'}))
+    username = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':'form-control'}))
+    email = forms.EmailField(max_length=50,widget=forms.EmailInput(attrs={'class':'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ['first_name','last_name','username', 'email' ]
+
+class FormEditPassword (forms.Form):
+    password1 = forms.CharField(label='Contraseña Nueva', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(label='Repetir Contraseña Nueva', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
