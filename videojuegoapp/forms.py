@@ -77,7 +77,7 @@ class FormVideojuego (forms.Form):
     desarrollador = forms.ChoiceField(choices=[])
     fecha_lanzamiento = forms.DateField()
     plataformas = forms.MultipleChoiceField(choices=[], widget=forms.CheckboxSelectMultiple)
-   
+    imagen_url = forms.CharField(max_length=255)
     def __init__(self, *args, **kwargs):
         super(FormVideojuego, self).__init__(*args, **kwargs)
         self.fields['genero'].choices = [(x.pk, x.nombre) for x in Genero.objects.all().order_by("nombre")]

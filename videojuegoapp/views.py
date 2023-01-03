@@ -99,15 +99,38 @@ def profile_password(request):
 
 # Search Views
 def search_posts(request):
+    categorias = Categoria.objects.all()
+    cat = ''
+    type = ''
+    videojuegos = []
+    if request.GET.get('type'):
+        type = request.GET['type']
+    
+    if request.GET.get('cat'):
+        cat = request.GET['cat']
+
     if request.GET.get('query'):
         query = request.GET['query']
-        posts = Post.objects.filter(Q(titulo__icontains=query) | Q(contenido__icontains=query))
-        return render(request, "videojuego/posts/busqueda.html", {"posts": posts, "query": query})
+        if cat:
+            posts = Post.objects.filter(Q(titulo__icontains=query) | Q(contenido__icontains=query)).filter(categoria=cat)
+        else:
+            posts = Post.objects.filter(Q(titulo__icontains=query) | Q(contenido__icontains=query))
+        if type and type == 'videojuego':
+            posts = []
+            videojuegos = Videojuego.objects.filter(Q(nombre__icontains=query))
+        
+        return render(request, "videojuego/posts/busqueda.html", {"posts": posts, "videojuegos": videojuegos, "query": query, "categorias": categorias, "tipo": type})
     return render(request, "videojuego/posts/busqueda.html")
 
 def detalle_post(request, id):
     post = Post.objects.get(id=id)
     return render(request, "videojuego/posts/detalle.html", {"post": post })
+
+def detalle_videojuego(request, id):
+    videojuego = Videojuego.objects.get(id=id)
+    plataformas = videojuego.plataformas.all()
+    return render(request, "videojuego/videojuego/detalle.html", {"videojuego": videojuego, "plataformas": plataformas })
+
 # ----------------------------------------------
 
 # Admin Views
@@ -443,7 +466,8 @@ def create_videojuego(request):
                 nombre=data["nombre"],
                 genero=Genero.objects.get(id=data["genero"]),
                 desarrollador=Desarrollador.objects.get(id=data["desarrollador"]),
-                fecha_lanzamiento=data["fecha_lanzamiento"]
+                fecha_lanzamiento=data["fecha_lanzamiento"],
+                imagen_url=data["imagen_url"]
                 )
             videojuego.save()
             list_plataformas = data["plataformas"]
@@ -468,6 +492,7 @@ def update_videojuego(request, id):
             videojuego.desarrollador = Desarrollador.objects.get(id=data["desarrollador"])
             videojuego.fecha_lanzamiento = data["fecha_lanzamiento"]
             videojuego.plataformas.set([])
+            videojuego.imagen_url = data["imagen_url"]
             for plataforma in data["plataformas"]:
                 videojuego.plataformas.add(plataforma)  
             videojuego.save()
@@ -479,6 +504,7 @@ def update_videojuego(request, id):
         data_mapped["desarrollador"] = videojuego.desarrollador.id
         data_mapped["fecha_lanzamiento"] = videojuego.fecha_lanzamiento
         data_mapped["plataformas"] = [x.pk for x in videojuego.plataformas.all()]
+        data_mapped["imagen_url"] = videojuego.imagen_url
         form = FormVideojuego(data=data_mapped)
     return render(request, 'videojuego/crud/videojuego/update.html', {"form": form})
 

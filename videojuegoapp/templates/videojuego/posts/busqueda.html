@@ -4,7 +4,45 @@
 
 {% block content %}
 <div class="busqueda mt-5 col-6 mx-auto">
-  <div class="results">
+  <div class="form-search">
+    <form action="/post/search">
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3">Texto</span>
+        <input class="form-control col-12" type="text" name="query" value="{{ query }}">
+      </div>
+      {% if tipo != 'videojuego' %}
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3">Tipo de busqueda</span>
+        <select name="type" class="form-select" aria-label="Default select example">
+          <option value="post" selected>Post</option>
+          <option value="videojuego">Videojuego</option>
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3">Tipo de busqueda</span>
+        <select name="cat" class="form-select" aria-label="Default select example">
+          <option value="">Todos</option>
+          {% for cat in categorias %}
+          <option value="{{ cat.pk }}">{{ cat.nombre }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      {% else %}
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="basic-addon3">Tipo de busqueda</span>
+        <select name="type" class="form-select" aria-label="Default select example">
+          <option value="post">Post</option>
+          <option value="videojuego" selected>Videojuego</option>
+        </select>
+      </div>
+      {% endif %}
+      <button type="submit" class="btn btn-primary">Buscar</button>
+
+    </form>
+  </div>
+
+  <div class="results mt-5">
     {% for post in posts%}
     <div class="card mb-3" style="max-width: 540px;">
       <div class="row g-0">
@@ -14,8 +52,25 @@
         <div class="col-md-8">
           <div class="card-body">
             <h6 class="card-title">{{ post.titulo }}</h6>
-            <p class="card-text"><small class="text-muted">Genero: {{ post.categoria.nombre }}</small></p>
+            <p class="card-text"><small class="text-muted">Categoria: {{ post.categoria.nombre }}</small></p>
             <a href="{% url 'gameblog-detail-post' post.id %}">Ver detalle</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    {% for videojuego in videojuegos%}
+    <div class="card mb-3" style="max-width: 540px;">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img src="{{ videojuego.imagen_url }}" class="rounded-start" style="max-width: 100%; height: 100%;" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h6 class="card-title">{{ videojuego.nombre }}</h6>
+            <p class="card-text"><small class="text-muted">Genero: {{ videojuego.genero.nombre }}</small></p>
+            <a href="{% url 'gameblog-detail-videogame' videojuego.id %}">Ver detalle</a>
           </div>
         </div>
       </div>
