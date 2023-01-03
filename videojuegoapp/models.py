@@ -37,3 +37,4 @@ class Videojuego(models.Model):
     desarrollador = models.ForeignKey(Desarrollador, on_delete=models.CASCADE)
     fecha_lanzamiento = models.DateField()
     plataformas = models.ManyToManyField(Plataforma)
+    imagen_url = models.CharField(max_length=255)

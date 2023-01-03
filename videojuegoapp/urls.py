@@ -13,6 +13,7 @@ urlpatterns = [
     path('auth/logout', LogoutView.as_view(next_page="/home"), name='gameblog-logout'),
     path('post/search', search_posts, name='gameblog-search-post'),
     path('post/<int:id>', detalle_post, name='gameblog-detail-post'),
+    path('videogame/<int:id>', detalle_videojuego, name='gameblog-detail-videogame'),
     # Admin
     path('actions', actions, name='gameblog-actions'),
     # CRUD Genero

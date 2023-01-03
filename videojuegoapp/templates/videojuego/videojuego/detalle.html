@@ -1,0 +1,29 @@
+{% extends "videojuego/bootstrap.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="busqueda mt-5 col-6 mx-auto">
+  <div class="card mb-3">
+    <img src="{{ videojuego.imagen_url }}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{ videojuego.nombre }}</h5>
+      <h6 class="card-subtitle mt-2 text-muted"> <span class="text-muted"> Categoria: </span>{{ videojuego.genero.nombre }}</h6>
+      <h6 class="card-subtitle mt-2 text-muted"><span class="text-muted">Desarrollador: </span>{{ videojuego.desarrollador.nombre }}</h6>
+      <h6 class="card-subtitle mt-2 text-muted"><span class="text-muted">Web-Desarrollador: </span>
+      <a href="{{ videojuego.desarrollador.web_url }}">{{ videojuego.desarrollador.nombre }}</a></h6>
+
+      <p class="card-text mt-5">
+        <h6>Plataformas</h6>
+        <ul>
+
+        {% for plat in plataformas %}
+        <li>{{ plat.nombre }}</li>
+        {% endfor %}
+        </ul>
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

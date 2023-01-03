@@ -20,6 +20,7 @@
         <th scope="col">Genero</th>
         <th scope="col">Desarrollador</th>
         <th scope="col">Fecha Lanzamiento</th>
+        <th scope="col">Imagen</th>
         <th scope="col">Acciones</th>
       </tr>
     </thead>
@@ -30,7 +31,8 @@
         <td>{{ videojuego.nombre }}</td>
         <td>{{ videojuego.genero.nombre }}</td>
         <td>{{ videojuego.desarrollador.nombre }}</td>
-        <td>{{ videojuego.fecha_lanzamiento}}</td>
+        <td>{{ videojuego.fecha_lanzamiento }}</td>
+        <td><img src="{{ videojuego.imagen_url }}" alt="" style="height: 40px; width: 40px;"></td>
         <td class="row d-flex justify-content-between">
           <a href="{% url 'gameblog-update-videojuego' videojuego.id %}" class="btn btn-warning no-padding col-3"><i
               class="bi bi-pencil"></i></a>
